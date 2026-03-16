@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-
 import { ProductModule } from './product/product.module';
 import { UserModule } from './user/user.module';
 import { PaymentModule } from './payment/payment.module';
@@ -19,27 +17,23 @@ import { CartItem } from 'entity/CartItem.entity';
 import { Order } from 'entity/Order.entity';
 import { AdminBotModule } from './admin-bot/admin-bot.module';
 
-
-
 @Module({
   imports: [
-       // Глобальный ConfigModule
     ConfigModule.forRoot({
-      isGlobal: true, // чтобы не импортировать в каждом модуле
+      isGlobal: true,
     }),
     TypeOrmModule.forRoot({
-      type: 'postgres', 
-      host: 'localhost',
-      port: 5432, 
-      username: 'postgres', 
-      password: '1708',
-      database: 'par', 
-      entities: [User,Product,CartItem,Order], 
-      synchronize: true,
-       logging: true,
-  logger: 'advanced-console',
-    }),
-
+  type: 'postgres',
+  host: process.env.DB_HOST || 'localhost',
+  port: parseInt(process.env.DB_PORT || '5432', 10),
+  username: process.env.DB_USERNAME || 'postgres',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME || 'default_db',
+  ssl: { rejectUnauthorized: false },
+  entities: [User, Product, CartItem, Order],
+  synchronize: true,
+  logging: false,
+}),
     UserModule,
     ProductModule,
     PaymentModule,
