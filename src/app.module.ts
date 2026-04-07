@@ -24,12 +24,12 @@ import { AdminBotModule } from './admin-bot/admin-bot.module';
     }),
     TypeOrmModule.forRoot({
   type: 'postgres',
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT || '5432', 10),
-  username: process.env.DB_USERNAME || 'postgres',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'default_db',
-  ssl: { rejectUnauthorized: false },
+  host:'localhost',
+  port:5432, 
+  username: 'postgres',
+  password:  '1708',
+  database: 'tg_bot',
+/*   ssl: { rejectUnauthorized: false }, */
   entities: [User, Product, CartItem, Order],
   synchronize: true,
   logging: false,
