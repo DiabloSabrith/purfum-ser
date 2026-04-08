@@ -22,14 +22,14 @@ import { AdminBotModule } from './admin-bot/admin-bot.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot({
+   TypeOrmModule.forRoot({
   type: 'postgres',
-  host:'localhost',
-  port:5432, 
-  username: 'postgres',
-  password:  '1708',
-  database: 'tg_bot',
-/*   ssl: { rejectUnauthorized: false }, */
+  host: process.env.DB_HOST || 'localhost',
+  port: parseInt(process.env.DB_PORT || '5432', 10),
+  username: process.env.DB_USERNAME || 'postgres',
+  password: process.env.DB_PASSWORD || '1708',
+  database: process.env.DB_NAME || 'tg_bot',
+  ssl: process.env.DB_HOST !== 'localhost' ? { rejectUnauthorized: false } : false,
   entities: [User, Product, CartItem, Order],
   synchronize: true,
   logging: false,
